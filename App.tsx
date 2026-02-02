@@ -2,10 +2,10 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import ChatWidget from './components/ChatWidget';
 import SparkEffect from './components/SparkEffect';
 import Home from './pages/Home';
 import WorksPage from './pages/WorksPage';
+import EquipmentsPage from './pages/EquipmentsPage';
 
 const App: React.FC = () => {
   return (
@@ -17,10 +17,10 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/works" element={<WorksPage />} />
+            <Route path="/equipments" element={<EquipmentsPage />} />
           </Routes>
         </main>
         <Footer />
-        <ChatWidget />
       </div>
     </HashRouter>
   );

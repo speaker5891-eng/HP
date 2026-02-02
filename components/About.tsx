@@ -1,7 +1,11 @@
 import React from 'react';
 import { SectionId } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { Settings, ArrowRight } from 'lucide-react';
 
 const About: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <section id={SectionId.ABOUT} className="py-16 md:py-32 bg-slate-950 relative overflow-hidden">
         {/* Decorative Elements */}
@@ -60,6 +64,18 @@ const About: React.FC = () => {
                     <p className="text-xs md:text-sm text-slate-500 font-mono mb-1">ESTABLISHED</p>
                     <p className="text-white font-medium tracking-wider text-sm md:text-base">1924</p>
                 </div>
+            </div>
+
+            {/* Equipment Button */}
+            <div className="mt-8">
+                <button 
+                    onClick={() => navigate('/equipments')}
+                    className="w-full sm:w-auto px-6 py-3 border border-slate-700 hover:border-orange-500 bg-slate-900/50 hover:bg-slate-900 text-white rounded transition-all group flex items-center justify-center sm:justify-start gap-3"
+                >
+                    <Settings className="w-5 h-5 text-orange-500" />
+                    <span className="font-bold tracking-wide">主要設備機器一覧を見る</span>
+                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-orange-500 group-hover:translate-x-1 transition-all ml-auto sm:ml-2" />
+                </button>
             </div>
           </div>
 
