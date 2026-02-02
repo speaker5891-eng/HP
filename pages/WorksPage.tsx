@@ -1,57 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { WORKS } from '../constants';
-import { ArrowLeft, Filter, Tag } from 'lucide-react';
+import { ArrowLeft, Filter, X, ZoomIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const WorksPage: React.FC = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<string>('All');
+  const [selectedImage, setSelectedImage] = useState<{url: string, title: string} | null>(null);
   
-  // カテゴリ一覧を抽出（重複排除）
-  // 優先表示順序を定義する場合はここでソートする
-  const rawCategories = Array.from(new Set(WORKS.flatMap(w => w.category.split('　'))));
-  const categoryOrder = [
-    "大型鉄骨",
-    "膜構造（テント）鉄骨工事",
-    "特殊鉄骨",
-    "建築鉄骨",
-    "特殊金物",
-    "品質管理",
-    "工場製作・品質管理"
-  ];
-  
-  const categories = ['All', ...categoryOrder.filter(c => rawCategories.includes(c)), ...rawCategories.filter(c => !categoryOrder.includes(c))];
+  // 3つの固定カテゴリ
+  const fixedCategories = ["大型鉄骨", "膜構造鉄骨", "特殊鉄骨・金物"];
+  const categories = ['All', ...fixedCategories];
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const renderGrid = (items: typeof WORKS) => (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  const openLightbox = (url: string, title: string) => {
+    setSelectedImage({ url, title });
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  // Masonry-like Layout
+  const renderMasonry = (items: typeof WORKS) => (
+    <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
       {items.map((work) => (
         <div 
             key={work.id} 
-            className="group relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 
-                       hover:border-orange-500/50 shadow-xl transition-all duration-500 animate-fade-in-up"
+            className="break-inside-avoid group relative overflow-hidden rounded-xl bg-slate-900 shadow-2xl cursor-pointer"
+            onClick={() => openLightbox(work.imageUrl, work.title)}
         >
-          <div className="aspect-[4/3] overflow-hidden relative">
-            <img 
-              src={work.imageUrl} 
-              alt={work.title} 
-              className="w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500"></div>
+          {/* Image */}
+          <img 
+            src={work.imageUrl} 
+            alt={work.title} 
+            className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+            loading="lazy"
+          />
+          
+          {/* Overlay Gradient on Hover */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300"></div>
+
+          {/* Zoom Icon */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-50 group-hover:scale-100">
+             <div className="bg-orange-600/90 p-3 rounded-full text-white shadow-lg backdrop-blur-sm">
+                <ZoomIn className="w-6 h-6" />
+             </div>
           </div>
           
-          <div className="p-4">
-            <div className="flex flex-wrap gap-2">
-                {work.category.split('　').map((cat, i) => (
-                    <span key={i} className="inline-block px-2 py-1 text-[10px] font-bold text-orange-400 border border-orange-500/20 bg-orange-950/30 rounded uppercase tracking-wider">
-                        {cat}
-                    </span>
-                ))}
-            </div>
+          {/* Category Tag (Overlay Bottom Left) */}
+          <div className="absolute bottom-4 left-4 pointer-events-none">
+             <span className="inline-block px-3 py-1 text-xs font-bold text-white bg-orange-600/90 backdrop-blur-md rounded shadow-lg border border-orange-500/50">
+                {work.category}
+             </span>
           </div>
         </div>
       ))}
@@ -59,7 +65,7 @@ const WorksPage: React.FC = () => {
   );
 
   return (
-    <div className="pt-24 pb-16 bg-slate-950 min-h-screen">
+    <div className="pt-24 pb-16 bg-slate-950 min-h-screen relative">
       <div className="container mx-auto px-6">
         
         {/* Header */}
@@ -74,10 +80,6 @@ const WorksPage: React.FC = () => {
           
           <span className="text-orange-500 font-bold text-xs tracking-[0.2em] uppercase block mb-3">WORKS GALLERY</span>
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">施工・製作実績一覧</h1>
-          <p className="text-slate-400 max-w-2xl leading-relaxed">
-            林鐵工所がこれまでに手掛けた施工実績の一部をご紹介します。<br/>
-            大型の物流倉庫から特殊な金物製作まで、幅広いニーズに対応しています。
-          </p>
         </div>
 
         {/* Filter */}
@@ -105,40 +107,44 @@ const WorksPage: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div>
+        <div className="min-h-[500px]">
             {filter === 'All' ? (
-                // Group by Category
-                <div className="space-y-20">
-                    {categories.filter(c => c !== 'All').map((cat) => {
-                        const items = WORKS.filter(item => item.category.includes(cat));
-                        if (items.length === 0) return null;
-                        
-                        return (
-                            <div key={cat} className="scroll-mt-32" id={cat}>
-                                <div className="flex items-center gap-3 mb-8 border-l-4 border-orange-500 pl-4">
-                                    <Tag className="text-orange-500 w-6 h-6" />
-                                    <h2 className="text-2xl md:text-3xl font-bold text-white">{cat}</h2>
-                                </div>
-                                {renderGrid(items)}
-                            </div>
-                        );
-                    })}
-                </div>
+                // Group by Category but maintain Masonry feel by just showing everything sorted or sectioned
+                // User asked for 3 categories classification. Let's just show all filtered by category if 'All' is selected, 
+                // but visually it's better to show them mixed or sectioned. 
+                // Let's show filtered items if specific category, or all items if 'All'.
+                renderMasonry(WORKS)
             ) : (
-                // Single Category View
-                <div>
-                     <div className="flex items-center gap-3 mb-8 border-l-4 border-orange-500 pl-4">
-                        <Tag className="text-orange-500 w-6 h-6" />
-                        <h2 className="text-2xl md:text-3xl font-bold text-white">{filter}</h2>
-                    </div>
-                    {renderGrid(WORKS.filter(item => item.category.includes(filter)))}
-                </div>
+                renderMasonry(WORKS.filter(item => item.category === filter))
             )}
         </div>
 
-        {WORKS.length === 0 && (
-            <div className="py-20 text-center text-slate-500 border border-dashed border-slate-800 rounded-xl">
-                該当する実績は見つかりませんでした。
+        {/* Lightbox Modal */}
+        {selectedImage && (
+            <div 
+                className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in-up"
+                onClick={closeLightbox}
+            >
+                <button 
+                    onClick={closeLightbox}
+                    className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2 z-50"
+                >
+                    <X className="w-8 h-8" />
+                </button>
+                
+                <div 
+                    className="relative max-w-7xl max-h-[90vh] w-full h-full flex flex-col items-center justify-center"
+                    onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
+                >
+                    <img 
+                        src={selectedImage.url} 
+                        alt={selectedImage.title} 
+                        className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
+                    />
+                    <div className="mt-4 text-center">
+                        <p className="text-white font-bold text-lg tracking-wide">{selectedImage.title}</p>
+                    </div>
+                </div>
             </div>
         )}
 

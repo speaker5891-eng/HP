@@ -47,74 +47,36 @@ export const SERVICES: ServiceItem[] = [
 ];
 
 // 施工実績データ
-// 画像ファイルはプロジェクトルートの work/ フォルダに配置してください
+// 厳選・3カテゴリー分類済み
 export const WORKS: WorkItem[] = [
-  // 既存データ
-  { 
-    id: 1, 
-    title: "大型物流倉庫 新築工事", 
-    category: "大型鉄骨", 
-    imageUrl: "work/05.jpg" 
-  },
-  { 
-    id: 2, 
-    title: "屋内運動場 屋根鉄骨工事", 
-    category: "膜構造（テント）鉄骨工事", 
-    imageUrl: "work/01.jpg" 
-  },
-  { 
-    id: 3, 
-    title: "耐震架台製作", 
-    category: "特殊鉄骨　特殊金物", 
-    imageUrl: "work/03.jpg" 
-  },
-  { 
-    id: 4, 
-    title: "オフィスビル 建方工事", 
-    category: "建築鉄骨", 
-    imageUrl: "work/06.jpg" 
-  },
-  { 
-    id: 5, 
-    title: "鉄骨製品検査・仮組み", 
-    category: "工場製作・品質管理", 
-    imageUrl: "work/07.jpg" 
-  },
-  { 
-    id: 6, 
-    title: "大規模施設 鉄骨工事", 
-    category: "大型鉄骨", 
-    imageUrl: "work/08.jpg" 
-  },
-  
-  // 新規追加データ（提供画像順）
+  // 大型鉄骨
+  { id: 1, title: "大型物流倉庫 新築工事", category: "大型鉄骨", imageUrl: "work/05.jpg" },
+  { id: 4, title: "オフィスビル 建方工事", category: "大型鉄骨", imageUrl: "work/06.jpg" },
+  { id: 6, title: "大規模施設 鉄骨工事", category: "大型鉄骨", imageUrl: "work/08.jpg" },
   { id: 7, title: "大型物流倉庫 鉄骨建方", category: "大型鉄骨", imageUrl: "work/11.jpg" },
-  { id: 8, title: "ドーム型施設 屋根構造", category: "膜構造（テント）鉄骨工事", imageUrl: "work/12.jpg" },
-  { id: 9, title: "屋内運動場 アーチ鉄骨", category: "膜構造（テント）鉄骨工事", imageUrl: "work/13.jpg" },
-  { id: 10, title: "屋根トラス構造詳細", category: "膜構造（テント）鉄骨工事", imageUrl: "work/14.jpg" },
-  { id: 11, title: "全天候型施設 鉄骨全景", category: "膜構造（テント）鉄骨工事", imageUrl: "work/15.jpg" },
-  { id: 12, title: "商業施設 鉄骨建方", category: "建築鉄骨", imageUrl: "work/16.jpg" },
-  { id: 13, title: "安全ネット設置状況", category: "品質管理", imageUrl: "work/17.jpg" },
+  { id: 12, title: "商業施設 鉄骨建方", category: "大型鉄骨", imageUrl: "work/16.jpg" },
   { id: 14, title: "基礎アンカー・鉄骨建方", category: "大型鉄骨", imageUrl: "work/18.jpg" },
-  { id: 15, title: "工場内 天井下地鉄骨", category: "建築鉄骨", imageUrl: "work/19.jpg" },
-  { id: 16, title: "立体トラス 仮組み検査", category: "工場製作・品質管理", imageUrl: "work/20.jpg" },
-  { id: 17, title: "屋外螺旋階段 製作・設置", category: "特殊金物", imageUrl: "work/21.jpg" },
-  { id: 18, title: "外壁下地鉄骨工事", category: "建築鉄骨", imageUrl: "work/22.jpg" },
   { id: 19, title: "大型クレーン揚重作業", category: "大型鉄骨", imageUrl: "work/23.jpg" },
-  { id: 20, title: "キャットウォーク・点検歩廊", category: "特殊鉄骨", imageUrl: "work/24.jpg" },
-  { id: 21, title: "工場倉庫 鉄骨フレーム", category: "大型鉄骨", imageUrl: "work/25.jpg" },
-  { id: 22, title: "大型庇（ひさし）鉄骨", category: "建築鉄骨", imageUrl: "work/26.jpg" },
-  { id: 23, title: "屋根鉄骨 施工状況", category: "大型鉄骨", imageUrl: "work/27.jpg" },
-  { id: 24, title: "特注ジョイント金物", category: "特殊金物", imageUrl: "work/28.jpg" },
-  { id: 25, title: "大型屋外看板 鉄骨枠", category: "特殊鉄骨", imageUrl: "work/29.jpg" },
+  { id: 25, title: "工場倉庫 鉄骨フレーム", category: "大型鉄骨", imageUrl: "work/25.jpg" },
   { id: 26, title: "広スパン屋根構造", category: "大型鉄骨", imageUrl: "work/30.jpg" },
   { id: 27, title: "夜間突貫工事対応", category: "大型鉄骨", imageUrl: "work/31.jpg" },
-  { id: 28, title: "長尺トラス 現場搬入", category: "工場製作・品質管理", imageUrl: "work/32.jpg" },
-  { id: 29, title: "店舗兼倉庫 鉄骨工事", category: "建築鉄骨", imageUrl: "work/33.jpg" },
-  { id: 30, title: "外壁ブレース・胴縁工事", category: "建築鉄骨", imageUrl: "work/34.jpg" },
   { id: 31, title: "高層部 鉄骨詳細", category: "大型鉄骨", imageUrl: "work/35.jpg" },
-  { id: 32, title: "耐震補強ブレース製作", category: "工場製作・品質管理", imageUrl: "work/36.jpg" },
-  { id: 33, title: "内装開口枠 下地鉄骨", category: "建築鉄骨", imageUrl: "work/37.jpg" },
+  
+  // 膜構造鉄骨
+  { id: 2, title: "屋内運動場 屋根鉄骨工事", category: "膜構造鉄骨", imageUrl: "work/01.jpg" },
+  { id: 8, title: "ドーム型施設 屋根構造", category: "膜構造鉄骨", imageUrl: "work/12.jpg" },
+  { id: 9, title: "屋内運動場 アーチ鉄骨", category: "膜構造鉄骨", imageUrl: "work/13.jpg" },
+  { id: 11, title: "全天候型施設 鉄骨全景", category: "膜構造鉄骨", imageUrl: "work/15.jpg" },
+
+  // 特殊鉄骨・金物
+  { id: 3, title: "耐震架台製作", category: "特殊鉄骨・金物", imageUrl: "work/03.jpg" },
+  { id: 5, title: "鉄骨製品検査・仮組み", category: "特殊鉄骨・金物", imageUrl: "work/07.jpg" },
+  { id: 16, title: "立体トラス 仮組み検査", category: "特殊鉄骨・金物", imageUrl: "work/20.jpg" },
+  { id: 17, title: "屋外螺旋階段 製作・設置", category: "特殊鉄骨・金物", imageUrl: "work/21.jpg" },
+  { id: 20, title: "キャットウォーク・点検歩廊", category: "特殊鉄骨・金物", imageUrl: "work/24.jpg" },
+  { id: 24, title: "特注ジョイント金物", category: "特殊鉄骨・金物", imageUrl: "work/28.jpg" },
+  { id: 250, title: "大型屋外看板 鉄骨枠", category: "特殊鉄骨・金物", imageUrl: "work/29.jpg" },
+  { id: 32, title: "耐震補強ブレース製作", category: "特殊鉄骨・金物", imageUrl: "work/36.jpg" },
 ];
 
 // AIチャットボットの設定プロンプト
