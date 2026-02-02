@@ -4,8 +4,10 @@ import { ServiceItem, WorkItem } from './types';
 
 export const COMPANY_NAME = "有限会社 林鐵工所";
 
+// 使用するAIモデルの定義
 export const GEMINI_MODEL = "gemini-3-flash-preview";
 
+// 事業内容データ
 export const SERVICES: ServiceItem[] = [
   {
     title: "鉄骨専用CADでの施工図の作成",
@@ -44,51 +46,48 @@ export const SERVICES: ServiceItem[] = [
   }
 ];
 
+// 施工実績データ
+// 画像ファイルはプロジェクトルートの work/ フォルダに配置してください
 export const WORKS: WorkItem[] = [
   { 
     id: 1, 
     title: "大型物流倉庫 新築工事", 
     category: "大型鉄骨", 
-    // 画像: 赤い鉄骨の建方工事
     imageUrl: "work/05.jpg" 
   },
   { 
     id: 2, 
     title: "屋内運動場 屋根鉄骨工事", 
     category: "特殊鉄骨", 
-    // 画像: アーチ屋根（施工中・クレーンあり）
     imageUrl: "work/01.jpg" 
   },
   { 
     id: 3, 
     title: "耐震架台製作", 
     category: "工場内設備", 
-    // 画像: 工場内の緑色の構造物
     imageUrl: "work/03.jpg" 
   },
   { 
     id: 4, 
     title: "オフィスビル 建方工事", 
     category: "建築鉄骨", 
-    // 画像: 灰色の鉄骨建物
     imageUrl: "work/06.jpg" 
   },
   { 
     id: 5, 
     title: "鉄骨製品検査・仮組み", 
     category: "品質管理", 
-    // 画像: オレンジ色のトラス構造
     imageUrl: "work/07.jpg" 
   },
   { 
     id: 6, 
     title: "大規模施設 鉄骨工事", 
     category: "特殊鉄骨", 
-    // 画像: 青い枠組み
     imageUrl: "work/08.jpg" 
   },
 ];
 
+// AIチャットボットの設定プロンプト
 export const SYSTEM_INSTRUCTION = `
 あなたは群馬県利根郡昭和村にある「有限会社 林鐵工所」のウェブサイトに設置された、熟練のAI技術アドバイザー「鉄（テツ）さん」です。
 以下の情報を元に、訪問者からの問い合わせに答えてください。
