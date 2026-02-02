@@ -9,7 +9,7 @@ const WorksPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<{url: string, title: string} | null>(null);
   
   // 3つの固定カテゴリ
-  const fixedCategories = ["大型鉄骨", "膜構造鉄骨", "特殊鉄骨・金物"];
+  const fixedCategories = ["鉄骨工事", "膜構造鉄骨工事", "特殊鉄骨・金物"];
   const categories = ['All', ...fixedCategories];
 
   useEffect(() => {
@@ -110,9 +110,6 @@ const WorksPage: React.FC = () => {
         <div className="min-h-[500px]">
             {filter === 'All' ? (
                 // Group by Category but maintain Masonry feel by just showing everything sorted or sectioned
-                // User asked for 3 categories classification. Let's just show all filtered by category if 'All' is selected, 
-                // but visually it's better to show them mixed or sectioned. 
-                // Let's show filtered items if specific category, or all items if 'All'.
                 renderMasonry(WORKS)
             ) : (
                 renderMasonry(WORKS.filter(item => item.category === filter))
