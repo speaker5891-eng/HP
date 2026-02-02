@@ -44,19 +44,13 @@ const WorksPage: React.FC = () => {
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500"></div>
           </div>
           
-          <div className="p-6">
-            <div className="flex flex-wrap gap-2 mb-3">
+          <div className="p-4">
+            <div className="flex flex-wrap gap-2">
                 {work.category.split('　').map((cat, i) => (
                     <span key={i} className="inline-block px-2 py-1 text-[10px] font-bold text-orange-400 border border-orange-500/20 bg-orange-950/30 rounded uppercase tracking-wider">
                         {cat}
                     </span>
                 ))}
-            </div>
-            <h4 className="text-xl font-bold text-white mb-2 group-hover:text-orange-100 transition-colors">
-              {work.title}
-            </h4>
-            <div className="mt-4 flex items-center justify-between">
-                <div className="h-0.5 w-12 bg-slate-800 group-hover:w-full group-hover:bg-orange-500 transition-all duration-500"></div>
             </div>
           </div>
         </div>
