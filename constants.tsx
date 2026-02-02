@@ -51,10 +51,10 @@ export const SERVICES: ServiceItem[] = [
 export const WORKS: WorkItem[] = [
   // 鉄骨工事 (躯体、大型、ビル、倉庫など)
   { id: 1, title: "大型物流倉庫 新築工事", category: "鉄骨工事", imageUrl: "work/05.jpg" },
-  { id: 4, title: "オフィスビル 建方工事", category: "鉄骨工事", imageUrl: "work/06.jpg" },
-  { id: 6, title: "大規模施設 鉄骨工事", category: "鉄骨工事", imageUrl: "work/08.jpg" },
-  { id: 101, title: "鉄骨梁 スタッド溶接", category: "鉄骨工事", imageUrl: "work/04.jpg" }, // Aboutで使用中の画像
-  { id: 102, title: "建設現場 足場設置", category: "鉄骨工事", imageUrl: "work/09.jpg" }, // Aboutで使用中の画像
+  { id: 4, title: "大型倉庫 新築工事", category: "鉄骨工事", imageUrl: "work/06.jpg" }, // 旧オフィスビル建方工事
+  { id: 6, title: "商業施設 新築工事", category: "鉄骨工事", imageUrl: "work/08.jpg" }, // 旧大規模施設鉄骨工事
+  { id: 102, title: "商業施設 新築工事", category: "鉄骨工事", imageUrl: "work/09.jpg" }, // 旧建設現場足場設置
+  { id: 101, title: "耐震フレーム 製作", category: "鉄骨工事", imageUrl: "work/04.jpg" }, // 旧鉄骨梁スタッド溶接
 
   // 膜構造鉄骨工事 (屋根、ドーム、運動場)
   { id: 2, title: "屋内運動場 屋根鉄骨工事", category: "膜構造鉄骨工事", imageUrl: "work/01.jpg" },
