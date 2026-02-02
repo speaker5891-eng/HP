@@ -1,31 +1,28 @@
 import React from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Works from './components/Works';
-import Contact from './components/Contact';
-import Recruit from './components/Recruit';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import SparkEffect from './components/SparkEffect';
+import Home from './pages/Home';
+import WorksPage from './pages/WorksPage';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-[100dvh] bg-slate-950 text-slate-200">
-      <SparkEffect />
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Works />
-        <Recruit />
-        <Contact />
-      </main>
-      <Footer />
-      <ChatWidget />
-    </div>
+    <HashRouter>
+      <div className="min-h-[100dvh] bg-slate-950 text-slate-200">
+        <SparkEffect />
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/works" element={<WorksPage />} />
+          </Routes>
+        </main>
+        <Footer />
+        <ChatWidget />
+      </div>
+    </HashRouter>
   );
 };
 

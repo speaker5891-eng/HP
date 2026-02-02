@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { SectionId } from '../types';
 import { COMPANY_NAME } from '../constants';
 
@@ -41,6 +42,9 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,18 +53,25 @@ const Navbar: React.FC = () => {
       // Calculate scroll progress
       const totalScroll = document.documentElement.scrollTop;
       const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scroll = `${totalScroll / windowHeight}`;
+      const scroll = windowHeight > 0 ? totalScroll / windowHeight : 0;
       setScrollProgress(Number(scroll));
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id: SectionId) => {
+  const handleNavClick = (id: SectionId) => {
     setIsOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    
+    if (location.pathname !== '/') {
+      // 別ページにいる場合はトップへ遷移し、ステートでターゲットIDを渡す
+      navigate('/', { state: { targetId: id } });
+    } else {
+      // トップページにいる場合はそのままスクロール
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -88,7 +99,7 @@ const Navbar: React.FC = () => {
 
         <nav className={`fixed w-full z-40 transition-all duration-300 top-0 ${scrolled ? 'bg-slate-950/90 backdrop-blur-md shadow-lg py-4 border-b border-slate-800/50' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-            <div className="flex items-center gap-2 cursor-pointer group" onClick={() => scrollTo(SectionId.HOME)}>
+            <div className="flex items-center gap-2 cursor-pointer group" onClick={() => handleNavClick(SectionId.HOME)}>
             <div className="bg-orange-600 p-1.5 rounded text-white group-hover:bg-orange-500 transition-colors shadow-[0_0_15px_rgba(234,88,12,0.4)] group-hover:shadow-[0_0_25px_rgba(234,88,12,0.6)]">
                 {/* Custom Welding Torch Icon */}
                 <WeldingTorchIcon className="w-6 h-6 text-white" />
@@ -103,7 +114,7 @@ const Navbar: React.FC = () => {
             {navLinks.map((link) => (
                 <button
                 key={link.id}
-                onClick={() => scrollTo(link.id)}
+                onClick={() => handleNavClick(link.id)}
                 className="text-sm font-medium text-slate-300 hover:text-orange-500 transition-colors tracking-wider relative group"
                 >
                 {link.label}
@@ -111,7 +122,7 @@ const Navbar: React.FC = () => {
                 </button>
             ))}
             <button 
-                onClick={() => scrollTo(SectionId.CONTACT)}
+                onClick={() => handleNavClick(SectionId.CONTACT)}
                 className="bg-orange-600 hover:bg-orange-500 text-white px-5 py-2 rounded-sm font-bold text-sm tracking-wider transition-all transform hover:-translate-y-0.5 active:scale-95 shadow-lg hover:shadow-orange-500/20"
             >
                 ご相談・お見積り
@@ -133,14 +144,14 @@ const Navbar: React.FC = () => {
             {navLinks.map((link) => (
                 <button
                 key={link.id}
-                onClick={() => scrollTo(link.id)}
+                onClick={() => handleNavClick(link.id)}
                 className="text-lg font-medium text-slate-300 hover:text-orange-500 transition-colors w-full text-center py-2"
                 >
                 {link.label}
                 </button>
             ))}
             <button 
-                onClick={() => scrollTo(SectionId.CONTACT)}
+                onClick={() => handleNavClick(SectionId.CONTACT)}
                 className="bg-orange-600 text-white px-8 py-3 rounded mt-4 font-bold"
             >
                 ご相談・お見積り
