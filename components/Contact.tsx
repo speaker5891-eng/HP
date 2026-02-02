@@ -1,8 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SectionId } from '../types';
-import { MapPin, Phone, Printer, Clock } from 'lucide-react';
+import { MapPin, Phone, Printer, Clock, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({
+    company: '',
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { company, name, email, message } = formData;
+    
+    // メール件名と本文の作成
+    const subject = `【お問い合わせ】${name}様より（ウェブサイト経由）`;
+    const body = `
+--------------------------------------------------
+会社名: ${company}
+お名前: ${name}
+メールアドレス: ${email}
+--------------------------------------------------
+
+お問い合わせ内容:
+${message}
+    `.trim();
+
+    // mailtoリンクの作成と実行
+    window.location.href = `mailto:hayashitekkoujyo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <section id={SectionId.CONTACT} className="pt-16 md:pt-24 bg-slate-950 border-t border-slate-900">
       <div className="container mx-auto px-6 mb-16 md:mb-24">
@@ -40,6 +76,16 @@ const Contact: React.FC = () => {
 
               <div className="flex items-start gap-4">
                 <div className="bg-slate-900 p-3 rounded text-orange-500 border border-slate-800 flex-shrink-0">
+                  <Mail size={24} />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-1">メールアドレス</h4>
+                  <p className="text-slate-400 text-sm md:text-base">hayashitekkoujyo@gmail.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="bg-slate-900 p-3 rounded text-orange-500 border border-slate-800 flex-shrink-0">
                   <Printer size={24} />
                 </div>
                 <div>
@@ -63,30 +109,61 @@ const Contact: React.FC = () => {
 
           {/* Form */}
           <div className="bg-slate-900 p-6 md:p-10 rounded-lg border border-slate-800 shadow-2xl h-fit">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-bold text-slate-300 mb-2">会社名（個人の場合は不要）</label>
-                  <input type="text" className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="株式会社 〇〇" />
+                  <input 
+                    type="text" 
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" 
+                    placeholder="株式会社 〇〇" 
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-slate-300 mb-2">お名前 <span className="text-orange-500">*</span></label>
-                  <input type="text" required className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="山田 太郎" />
+                  <input 
+                    type="text" 
+                    name="name"
+                    required 
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" 
+                    placeholder="山田 太郎" 
+                  />
                 </div>
               </div>
               
               <div>
                 <label className="block text-sm font-bold text-slate-300 mb-2">メールアドレス <span className="text-orange-500">*</span></label>
-                <input type="email" required className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="email@example.com" />
+                <input 
+                  type="email" 
+                  name="email"
+                  required 
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" 
+                  placeholder="email@example.com" 
+                />
               </div>
 
               <div>
                 <label className="block text-sm font-bold text-slate-300 mb-2">お問い合わせ内容 <span className="text-orange-500">*</span></label>
-                <textarea required rows={4} className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="ご用件・求人への応募などをご記入ください..."></textarea>
+                <textarea 
+                  name="message"
+                  required 
+                  rows={4} 
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full bg-slate-950 border border-slate-700 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" 
+                  placeholder="ご用件・求人への応募などをご記入ください..."
+                ></textarea>
               </div>
 
               <button type="submit" className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded transition-all transform active:scale-95 shadow-[0_0_15px_rgba(234,88,12,0.3)] hover:shadow-[0_0_25px_rgba(234,88,12,0.5)]">
-                送信する
+                メール作成画面を起動する
               </button>
             </form>
           </div>
